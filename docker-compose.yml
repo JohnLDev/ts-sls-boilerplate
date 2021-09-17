@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  app: 
+    build: .
+    volumes:
+      - .:/home/node/app
+    restart: on-failure
+    ports: 
+      - 3333:3333
+    depends_on: 
+      - db
+    networks:
+      - backend
+
+  db:
+    container_name: "mysql_sls"
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - .docker/database:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_PASSWORD=docker
+      - MYSQL_HOST=localhost
+      - MYSQL_DATABASE=database
+    networks:
+      - backend
+
+
+networks:
+  backend:
+    driver: bridge
+
+      

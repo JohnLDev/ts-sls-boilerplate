@@ -1,0 +1,6 @@
+node_modules
+.serverless
+.build
+.webpack
+.docker/database/**
+!.docker/database/.gitkeep
