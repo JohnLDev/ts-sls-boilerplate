@@ -1,0 +1,15 @@
+.git
+.gitignore
+.cache
+.vscode
+.env.example
+README.md
+
+node_modules
+.dockerignore
+Jenkinsfile
+Dockerfile
+Jenkinsfile
+lifecycle-policy.json
+k8s-*.yaml
+.docker
