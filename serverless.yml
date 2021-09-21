@@ -2,6 +2,7 @@ service: typescript
 frameworkVersion: '2'
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-webpack
   - serverless-offline
 
@@ -14,6 +15,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: '20201221'
+
 
 
 

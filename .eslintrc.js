@@ -1,33 +1,19 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
-  extends: [
-    'airbnb-base',
-    'plugin:import/typescript',
-    'prettier/@typescript-eslint',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['standard', 'prettier/@typescript-eslint', "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended",],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['@typescript-eslint', 'prettier'],
-
   rules: {
-    'import/prefer-default-export': 'off',
-
+    camelcase: 'off',
+    "no-useless-constructor": "off",
     'prettier/prettier': 'error',
-    'no-useless-constructor': 'off',
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '_',
-      },
-    ],
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -35,9 +21,9 @@ module.exports = {
         format: ['PascalCase'],
         custom: {
           regex: '^I[A-Z]',
-          match: true,
-        },
-      },
+          match: true
+        }
+      }
     ],
 
     'import/extensions': [
@@ -47,13 +33,13 @@ module.exports = {
         js: 'never',
         jsx: 'never',
         ts: 'never',
-        tsx: 'never',
-      },
-    ],
+        tsx: 'never'
+      }
+    ]
   },
   settings: {
     'import/resolver': {
-      typescript: {},
-    },
-  },
-};
+      typescript: {}
+    }
+  }
+}

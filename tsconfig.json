@@ -1,6 +1,13 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6"],
+    "types": ["reflect-metadata"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
     "strictNullChecks": true,
     "esModuleInterop": true,    
@@ -8,10 +15,8 @@
     "noUnusedParameters": true,
     "removeComments": true,
     "sourceMap": true,
-    "target": "ES2020",
+
     "outDir": ".build",
-    "moduleResolution": "node",
-    "lib": ["ESNext"],
     "rootDir": "./"
   },
   "exclude": [
@@ -21,7 +26,7 @@
     ".vscode/**/*",
     ".docker"
   ],
-  "include": ["src/**/*.ts", "serverless.ts"],
+  "include": ["src/**/*.ts","src/**/*.entity.ts", "serverless.ts"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   }

@@ -1,9 +1,9 @@
-import serverless from 'serverless-http';
-import express from 'express';
-import { router } from '@src/routes';
+import 'reflect-metadata'
+import '@framework/database/index'
+import { config } from 'dotenv'
+import { app } from '@framework/http/server'
+import serverless from 'serverless-http'
 
-const app = express();
+config()
 
-app.use(router);
-
-export const handler = serverless(app);
+export const handler = serverless(app)

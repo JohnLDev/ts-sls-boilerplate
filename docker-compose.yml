@@ -18,6 +18,8 @@ services:
     image: mysql:latest
     ports:
       - "3306:3306"
+    expose:
+      - '3306'
     volumes:
       - .docker/database:/var/lib/mysql
     environment:

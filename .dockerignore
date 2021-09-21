@@ -5,7 +5,6 @@
 .env.example
 README.md
 
-node_modules
 .dockerignore
 Jenkinsfile
 Dockerfile
