@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      // "@src/*": ["src/*"],
+      "@devops/*": ["devops/"],
       "@domain/*": ["src/1-domain/*"],
       "@business/*": ["src/2-business/*"],
       "@controller/*": ["src/3-controller/*"],

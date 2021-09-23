@@ -1,29 +1,27 @@
 import { Sequelize, Options } from 'sequelize'
-import { config } from 'dotenv'
-console.log('initializing sequelize')
 
-config()
+console.log('initializing sequelizee')
+const isOffline = process.env.IS_OFFLINE === 'true'
 
-const db = {
-  host: 'db',
-  port: '3306',
-  userName: 'root',
-  password: 'docker',
-  database: 'database',
-}
-
-// if (process.env.STAGE === 'local') {
-//   db.host = process.env.DB_HOST || 'localhost'
-//   db.port = process.env.DB_PORT || '5432'
-//   db.userName = process.env.DB_USER || 'postgres'
-//   db.password = process.env.DB_PASSWORD || 'password'
-//   db.database = process.env.DB_NAME || 'cartos'
-// }
-
+const db = isOffline
+  ? {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT || 3306,
+      userName: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    }
+  : {
+      host: process.env.AURORA_HOST,
+      port: process.env.AURORA_PORT || 3306,
+      userName: process.env.AURORA_USERNAME,
+      password: process.env.AURORA_PASSWORD,
+      database: process.env.AURORA_DB_NAME,
+    }
 const dbConnection: Options = {
   dialect: 'mysql',
   host: db.host,
-  port: parseInt(db.port, 10),
+  port: parseInt(String(db.port), 10),
   username: db.userName,
   password: db.password,
   database: db.database,

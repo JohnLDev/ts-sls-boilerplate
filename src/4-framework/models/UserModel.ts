@@ -40,6 +40,8 @@ UserModel.init(
   {
     tableName: 'users',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     underscored: true,
     sequelize,
   },

@@ -5,6 +5,7 @@ import { ContainerModule, interfaces } from 'inversify'
 // } from '@business/services/IUserService'
 // import { UserService } from '@framework/services/UserService'
 
-export const ServiceModule = new ContainerModule((bind: interfaces.Bind) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const ServiceModule = new ContainerModule((_bind: interfaces.Bind) => {
   // bind<IUserService>(IUserServiceToken).to(UserService)
 })

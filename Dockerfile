@@ -9,7 +9,7 @@ WORKDIR /home/node/app
 COPY package.json yarn.lock /home/node/app/
 
 RUN npm install -g yarn
-RUN yarn install 
+RUN yarn install --frozen-lockfile
 RUN chmod 777 /home/node/app
 
 

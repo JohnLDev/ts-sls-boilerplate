@@ -1,31 +1,51 @@
+org: johnldev
+app: ts-example
 service: typescript
+useDotenv: true
 frameworkVersion: '2'
 
 plugins:
-  - serverless-dotenv-plugin
   - serverless-webpack
+  - serverless-dotenv-plugin
   - serverless-offline
 
 custom:
+  funcDir: src/4-framework/functions
   webpack:
     webpackConfig: ./webpack.config.js
-    includeModules: true
+    includeModules:
+      forceInclude: 
+        - mysql2
 
 provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: '20201221'
-
-
-
+  stage: ${opt:stage, "${env:stage, 'dev'}"}
+  region: ${opt:region, "${env:region, 'us-east-1'}"}
+  timeout: 28
+  memorySize: 512
+  vpc:
+    securityGroupIds:
+      - sg-01c5b51c6ac07e81d
+    subnetIds:
+      - subnet-05be106cc976db75c
+      - subnet-07068b570660d194a
+      - subnet-0c3b56549c93364ff
+      - subnet-0e9f51f1cb27eab50
+      - subnet-075e51883375ab8ce
+      - subnet-0167b640074c77fad
+        
 
 functions:
-  api:
-    handler: src/app.handler
+  CreateUser:
+    handler: ${self:custom.funcDir}/user/CreateUserFunction.handler
     events:
-      - httpApi: '*'
-
-
+      - http:
+          path: /user
+          method: post
+          cors: 
+            origin: '*'
 package:
   individually: true
   excludeDevDependencies: true

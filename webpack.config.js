@@ -2,6 +2,7 @@ const path = require('path');
 const slsw = require('serverless-webpack');
 const nodeExternals = require('webpack-node-externals');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 /*
 This line is only required if you are specifying `TS_NODE_PROJECT` for whatever reason.
@@ -55,9 +56,12 @@ module.exports = {
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
+
         },
       },
     ],
   },
   plugins: [],
+  // plugins: [new ForkTsCheckerWebpackPlugin()],
+
 };

@@ -4,3 +4,4 @@ node_modules
 .webpack
 .docker/database/**
 !.docker/database/.gitkeep
+.env

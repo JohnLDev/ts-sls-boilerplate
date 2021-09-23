@@ -2,6 +2,7 @@ import {
   IInputCreateUserDTO,
   OutputCreateUserDTO,
 } from '@business/dtos/useCases/user/CreateUserDTO'
+import { hashSync } from 'bcrypt'
 import {
   IUserRepository,
   IUserRepositoryToken,
@@ -14,17 +15,19 @@ import { inject, injectable } from 'inversify'
 export class CreateUserCase
   implements IUseCase<IInputCreateUserDTO, OutputCreateUserDTO>
 {
-  private userService: IUserRepository
-  constructor(@inject(IUserRepositoryToken) userService: IUserRepository) {
-    this.userService = userService
+  private userRepository: IUserRepository
+  constructor(@inject(IUserRepositoryToken) userRepository: IUserRepository) {
+    this.userRepository = userRepository
   }
 
   async exec(data: IInputCreateUserDTO): Promise<OutputCreateUserDTO> {
     try {
-      const user = await this.userService.create(data)
+      data.password = hashSync(data.password, 10)
+      const user = await this.userRepository.create(data)
 
       return right(user)
     } catch (error) {
+      console.log(error, 'USE CASE')
       const requestError =
         error?.response?.data?.errors || error?.response?.data || error
       console.log(requestError)

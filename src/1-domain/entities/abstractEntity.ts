@@ -8,11 +8,11 @@ export abstract class AbstractEntity<T> {
     this.props = props
   }
 
-  // public export(): T {
-  //   return { ...this.props }
-  // }
+  public export(): T {
+    return { ...this.props }
+  }
 
-  // public exportJson(): string {
-  //   return JSON.stringify(this.props)
-  // }
+  public exportJson(): string {
+    return JSON.stringify(this.props)
+  }
 }
