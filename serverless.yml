@@ -84,7 +84,8 @@ functions:
             origin: '*'
 
 resources:
-  - ${file("./devops/resources/dynamo.yml")}
+  Resources:
+    ${file("./devops/resources/dynamo.yml")}
 
 
 package:
