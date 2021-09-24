@@ -1,4 +1,5 @@
 import { Sequelize, Options } from 'sequelize'
+import dynamoose from 'dynamoose'
 
 console.log('initializing sequelizee')
 const isOffline = process.env.IS_OFFLINE === 'true'
@@ -35,3 +36,17 @@ const dbConnection: Options = {
 }
 
 export const sequelize = new Sequelize(dbConnection)
+
+if (isOffline) {
+  const host = process.env.LOCALSTACK_HOST || 'localhost'
+
+  const port = process.env.LOCALSTACK_PORT || '4566'
+
+  console.log('running locally', host, port)
+  dynamoose.aws.sdk.config.update({
+    accessKeyId: 'DEFAULT_ACCESS_KEY',
+    secretAccessKey: 'DEFAULT_SECRET_ACCESS_KEY',
+  })
+
+  dynamoose.aws.ddb.local(`http://${host}:${port}`)
+}

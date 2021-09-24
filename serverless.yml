@@ -1,16 +1,26 @@
 org: johnldev
-app: ts-example
+# app: ts-example
 service: typescript
 useDotenv: true
 frameworkVersion: '2'
 
 plugins:
-  - serverless-webpack
   - serverless-dotenv-plugin
+  - serverless-dynamodb-local 
   - serverless-offline
+  - serverless-webpack
 
 custom:
   funcDir: src/4-framework/functions
+  dynamodb:
+    stages: 
+      - ${self:provider.stage}
+    start:
+      host: ${self:provider.environment.LOCALSTACK_HOST}
+      port: ${self:provider.environment.LOCALSTACK_PORT}
+      migrate: true
+      noStart: true
+      seed: true
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules:
@@ -25,6 +35,24 @@ provider:
   region: ${opt:region, "${env:region, 'us-east-1'}"}
   timeout: 28
   memorySize: 512
+  environment: 
+    LOCALSTACK_HOST: ${env:LOCALSTACK_HOST, "localhost"}
+    LOCALSTACK_PORT: ${env:LOCALSTACK_PORT, "4566"}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:CreateTable
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:ListStreams
+          Resource: 'arn:aws:dynamodb:${self:provider.region}:*:*'
   vpc:
     securityGroupIds:
       - sg-01c5b51c6ac07e81d
@@ -46,6 +74,19 @@ functions:
           method: post
           cors: 
             origin: '*'
+  DynamoTest:
+    handler: ${self:custom.funcDir}/DynamoTest.handler
+    events:
+      - http:
+          path: /Dynamo
+          method: post
+          cors: 
+            origin: '*'
+
+resources:
+  - ${file("./devops/resources/dynamo.yml")}
+
+
 package:
   individually: true
   excludeDevDependencies: true

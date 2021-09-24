@@ -4,16 +4,18 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "start": "sls offline --httpPort 3333 --host 0.0.0.0"
+    "start": "npx sls offline start --httpPort 3333 --host 0.0.0.0"
   },
   "dependencies": {
     "@middy/core": "^2.5.1",
     "@middy/do-not-wait-for-empty-event-loop": "^2.5.1",
     "@middy/http-cors": "^2.5.1",
     "@middy/http-json-body-parser": "^2.5.1",
+    "aws-sdk": "^2.994.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
+    "dynamoose": "^2.8.2",
     "inversify": "^5.1.1",
     "mysql2": "^2.3.0",
     "reflect-metadata": "^0.1.13",
@@ -43,6 +45,7 @@
     "prettier": "^2.4.1",
     "sequelize-cli": "^6.2.0",
     "serverless": "^2.59.0",
+    "serverless-dynamodb-local": "^0.2.40",
     "serverless-offline": "^8.2.0",
     "serverless-webpack": "^5.5.4",
     "ts-loader": "^9.2.5",

@@ -1,15 +1,23 @@
 version: "3.8"
 
 services:
-  app: 
-    build: .
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "4571:4571" 
+      - "8080:8080"
+
+    environment:
+      - SERVICES=dynamodb
+      - LAMBDA_EXECUTOR=local
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_REMOTE_DOCKER=false
+      - PORT_WEB_UI=${PORT_WEB_UI- }
     volumes:
-      - .:/home/node/app
-    restart: on-failure
-    ports: 
-      - 3333:3333
-    depends_on: 
-      - db
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - backend
 
@@ -29,6 +37,25 @@ services:
       - MYSQL_DATABASE=database
     networks:
       - backend
+
+  app: 
+    build: .
+    volumes:
+      - .:/home/node/app
+    restart: on-failure
+    ports: 
+      - 3333:3333
+    links:
+      - localstack
+      - db
+    depends_on: 
+      - db
+      - localstack
+    networks:
+      - backend
+    environment:
+      LOCALSTACK_HOST: localstack
+      LOCALSTACK_PORT: 4566
 
 
 networks:
