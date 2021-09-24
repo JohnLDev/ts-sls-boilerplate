@@ -11,7 +11,6 @@
     "@middy/do-not-wait-for-empty-event-loop": "^2.5.1",
     "@middy/http-cors": "^2.5.1",
     "@middy/http-json-body-parser": "^2.5.1",
-    "aws-sdk": "^2.994.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
