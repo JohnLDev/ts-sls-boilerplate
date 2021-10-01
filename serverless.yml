@@ -1,26 +1,16 @@
 org: johnldev
 # app: ts-example
-service: typescript
+service: Propose
 useDotenv: true
 frameworkVersion: '2'
 
 plugins:
   - serverless-dotenv-plugin
-  - serverless-dynamodb-local 
   - serverless-offline
   - serverless-webpack
 
 custom:
   funcDir: src/4-framework/functions
-  dynamodb:
-    stages: 
-      - ${self:provider.stage}
-    start:
-      host: ${self:provider.environment.LOCALSTACK_HOST}
-      port: ${self:provider.environment.LOCALSTACK_PORT}
-      migrate: true
-      noStart: true
-      seed: true
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules:
@@ -35,24 +25,25 @@ provider:
   region: ${opt:region, "${env:region, 'us-east-1'}"}
   timeout: 28
   memorySize: 512
-  environment: 
-    LOCALSTACK_HOST: ${env:LOCALSTACK_HOST, "localhost"}
-    LOCALSTACK_PORT: ${env:LOCALSTACK_PORT, "4566"}
   iam:
     role:
       statements:
         - Effect: Allow
           Action:
-            - dynamodb:DescribeTable
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:CreateTable
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-            - dynamodb:ListStreams
-          Resource: 'arn:aws:dynamodb:${self:provider.region}:*:*'
+            - sns:Publish
+            - sns:Subscribe
+          Resource: 'arn:aws:sns:us-east-1:*:*'
+
+        - Effect: "Allow"
+          Action: 
+            - sqs:SendMessage
+            - sqs:GetQueueUrl
+            - sqs:ListQueues
+          Resource: "arn:aws:sqs:us-east-1:*:*"
+          
+  environment: 
+    LOCALSTACK_HOST: ${env:LOCALSTACK_HOST, "localhost"}
+    LOCALSTACK_PORT: ${env:LOCALSTACK_PORT, "4566"}
   vpc:
     securityGroupIds:
       - sg-01c5b51c6ac07e81d
@@ -82,10 +73,18 @@ functions:
           method: post
           cors: 
             origin: '*'
+  sqs:
+    handler: ${self:custom.funcDir}/sqs.handler
+    events:
+      - sqs:
+          arn: 
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn
 
 resources:
-  Resources:
-    ${file("./devops/resources/dynamo.yml")}
+    - ${file("./devops/resources/sqs.yml")}
+    - ${file("./devops/resources/sns.yml")}
 
 
 package:

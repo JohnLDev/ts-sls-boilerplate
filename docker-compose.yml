@@ -2,19 +2,19 @@ version: "3.8"
 
 services:
   localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
-    image: localstack/localstack
+    container_name: "localstack_Proposal"
+    image: localstack/localstack-full
     ports:
       - "4566:4566"
       - "4571:4571" 
       - "8080:8080"
 
     environment:
-      - SERVICES=dynamodb
+      - SERVICES=sns,sqs
       - LAMBDA_EXECUTOR=local
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_REMOTE_DOCKER=false
-      - PORT_WEB_UI=${PORT_WEB_UI- }
+      - PORT_WEB_UI=8080
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -38,8 +38,34 @@ services:
     networks:
       - backend
 
+  setup-resources:
+    image: mesosphere/aws-cli
+    container_name: "setup-resources"
+    volumes: 
+      - ./dev_env:/project/dev_env
+    environment:
+      - AWS_ACCESS_KEY_ID=AKIAEXAMPLE123
+      - AWS_SECRET_ACCESS_KEY=AWSSECRETACCESSEY123
+      - AWS_DEFAULT_REGION=us-east-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        sleep 10
+        # Executing SNS
+        aws sns create-topic --name FGTSProposalConfirmed --endpoint-url=http://localstack:4566 
+        # Executing SQS
+        aws sqs create-queue --endpoint-url=http://localstack:4566 --queue-name FGTS;
+        # Subscribing to SNS to SQS
+        aws --endpoint-url=http://localstack:4566 sns subscribe --topic-arn arn:aws:sns:us-east-1:000000000000:FGTSProposalConfirmed --protocol sqs --notification-endpoint http://localstack:4566/queue/FGTS
+      "
+    depends_on:
+      - localstack
+    networks:
+      - backend
+
   app: 
     build: .
+    container_name: "FGTS_Proposal"
     volumes:
       - .:/home/node/app
     restart: on-failure
@@ -51,6 +77,7 @@ services:
     depends_on: 
       - db
       - localstack
+      - setup-resources
     networks:
       - backend
     environment:

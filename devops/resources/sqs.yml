@@ -1,0 +1,6 @@
+Resources:
+  SQSQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: FGTS
+      VisibilityTimeout: 60

@@ -1,0 +1,5 @@
+Resources:
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: FGTSProposalConfirmed

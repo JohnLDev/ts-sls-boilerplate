@@ -1,0 +1,28 @@
+{
+  "Records": [
+    {
+      "messageId": "ef5cbbc8-e75f-4f01-a258-193ad8a21946",
+      "receiptHandle": "AQEB8FCuSwLiTHsiYrNXrEfXcmQMjFvXWjN4obY2qucaZy1OWJFH6zfWNfzhItx1u06VF2Xn3P/jhZvyob1XM8iDycxxh08Jy831V/DegKPyZ1VYtOLJQD4vAiZtDDnodgr+xtZyKrgqezVaG6DH10fQX8nSYxmkVRZSBe0CA9YP8M3gNdms2w8gOR+SmS/W6GmR5X3ZK9xwu7DF/ysQdwgANVDnnRaOeHM8YW/apQtsDtstBVynyAuzoTZsrsYEQ7bkUC+W0GLFDvZbggNoTsCrVKgyOoq6WKJK/pvb7Ebm795HwO94mHLlxsuzMOOGpkh+ScItdLGAnzQFxrMjbwabpX5UIHWoFt0Qvx5k+gTYRBw1nZd73xd1Gp0FBktGSDsD",
+      "body": {
+          "Type" : "Notification",
+          "MessageId" : "63840dd9-44a2-59a8-b1bb-54171b0b7dad",
+          "TopicArn" : "arn:aws:sns:us-east-1:851996801877:FGTSProposalConfirmed",
+          "Message" : "{id:02}",
+          "Timestamp" : "2021-09-29T12:34:49.361Z",
+          "SignatureVersion" : "1",
+          "Signature" : "XHJY0wsQUgZslCu6CBkhLqqYrVA/XJ03z/XNSSMAkqAFm9xOGy3+xs1wcwGhdQ+TKfYzmQ9lFlErKfaQ80s4xhChgzl70eSh97kB/L80ti6lpHjb8qkxdHGlG9Xfh1ZTFDkVLvDeV2AxU8nHPNelNbAdq93lEKA5e3H0KoF92g715UNJ+MzF+1CBwLgj0Ve5m9nh06bMXzQLaIKBwjtwB4yFA2SQYFwywqamkr9MCG65T8twdWQ7IUcAe+EiH8r+WkYyjBrecjwicoxS0Xpt8rTtJOkZyYwEMleD0oyLTmfBwdkIVswWksjIqJBwgZEvdaK+zXCbPlf6f2R5L5L83g==",
+          "SigningCertURL" : "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem",
+          "UnsubscribeURL" : "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:851996801877:FGTSProposalConfirmed:ba9fb082-9071-425c-9207-286f9c2632fe",
+          "MessageAttributes" : {
+            "id" : {"Type":"String","Value":"1"}
+          }
+        },
+      "attributes": ["Object"],
+      "messageAttributes": {},
+      "md5OfBody": "54af55c738002ab95b994e8ed7ccee2b",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:851996801877:FGTS",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}
