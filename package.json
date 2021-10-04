@@ -4,7 +4,17 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "start": "npx sls offline start --httpPort 3333 --host 0.0.0.0"
+    "start": "npx sls offline start --httpPort 3333 --host 0.0.0.0",
+    "lint": "tslint --project tsconfig.json -t verbose",
+    "lint:fix": "yarn run lint -- --fix",
+    "prettier": "prettier --list-different './**/*.{js,ts}'",
+    "typecheck": "tsc --noEmit",
+    "dev": "AWS_PROFILE=luby-dev serverless offline",
+    "test": "jest",
+    "pipe:check": "yarn typecheck & yarn test & yarn lint:fix",
+    "test:coverage": "jest . --coverage",
+    "db:migrate": "sequelize-cli db:migrate",
+    "migration:generate": "sequelize-cli migration:generate"
   },
   "dependencies": {
     "@middy/core": "^2.5.1",
