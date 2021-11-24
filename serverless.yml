@@ -1,5 +1,5 @@
-org: johnldev
-app: ts-example
+# org: johnldev
+# app: ts-example
 service: typescript
 useDotenv: true
 frameworkVersion: '2'
@@ -25,27 +25,22 @@ provider:
   region: ${opt:region, "${env:region, 'us-east-1'}"}
   timeout: 28
   memorySize: 512
-  vpc:
-    securityGroupIds:
-      - sg-01c5b51c6ac07e81d
-    subnetIds:
-      - subnet-05be106cc976db75c
-      - subnet-07068b570660d194a
-      - subnet-0c3b56549c93364ff
-      - subnet-0e9f51f1cb27eab50
-      - subnet-075e51883375ab8ce
-      - subnet-0167b640074c77fad
+  # vpc:
+  #   securityGroupIds:
+  #     - sg-01c5b51c6ac07e81d
+  #   subnetIds:
+  #     - subnet-05be106cc976db75c
+  #     - subnet-07068b570660d194a
+  #     - subnet-0c3b56549c93364ff
+  #     - subnet-0e9f51f1cb27eab50
+  #     - subnet-075e51883375ab8ce
+  #     - subnet-0167b640074c77fad
         
 
 functions:
-  CreateUser:
-    handler: ${self:custom.funcDir}/user/CreateUserFunction.handler
-    events:
-      - http:
-          path: /user
-          method: post
-          cors: 
-            origin: '*'
+   - ${file(${self:custom.funcDir}/user/user.yml)}
+
+   
 package:
   individually: true
   excludeDevDependencies: true

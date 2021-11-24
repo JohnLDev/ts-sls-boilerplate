@@ -1,0 +1,8 @@
+CreateUser:
+  handler: ${self:custom.funcDir}/user/CreateUserFunction.handler
+  events:
+    - http:
+        path: /user
+        method: post
+        cors: 
+          origin: '*'
