@@ -5,9 +5,8 @@ useDotenv: true
 frameworkVersion: '2'
 
 plugins:
-  - serverless-webpack
-  - serverless-dotenv-plugin
   - serverless-offline
+  - serverless-webpack
 
 custom:
   funcDir: src/4-framework/functions
@@ -25,16 +24,13 @@ provider:
   region: ${opt:region, "${env:region, 'us-east-1'}"}
   timeout: 28
   memorySize: 512
-  # vpc:
-  #   securityGroupIds:
-  #     - sg-01c5b51c6ac07e81d
-  #   subnetIds:
-  #     - subnet-05be106cc976db75c
-  #     - subnet-07068b570660d194a
-  #     - subnet-0c3b56549c93364ff
-  #     - subnet-0e9f51f1cb27eab50
-  #     - subnet-075e51883375ab8ce
-  #     - subnet-0167b640074c77fad
+  environment:
+    AURORA_HOST: ${env:AURORA_HOST, ssm:/fgts/infra/aurora/host}
+    AURORA_PORT: ${env:AURORA_PORT, ssm:/fgts/infra/aurora/port}
+    AURORA_USERNAME: ${env:AURORA_USERNAME, ssm:/fgts/infra/aurora/username}
+    AURORA_PASSWORD: ${env:AURORA_PASSWORD, ssm:/fgts/infra/aurora/password}
+    AURORA_DB_NAME: ${env:AURORA_DB_NAME, ssm:/fgts/infra/aurora/db}
+
         
 
 functions:
