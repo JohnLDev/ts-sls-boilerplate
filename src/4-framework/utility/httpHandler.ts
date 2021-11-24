@@ -1,4 +1,4 @@
-import { httpResponse } from '@framework/util/httpResponse'
+import { httpResponse } from '@framework/utility/httpResponse'
 import { Either } from '@shared/errors/either'
 import { IError } from '@shared/errors/iError'
 import { APIGatewayProxyResult } from 'aws-lambda'

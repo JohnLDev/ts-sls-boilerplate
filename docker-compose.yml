@@ -3,6 +3,8 @@ version: "3.8"
 services:
   app: 
     build: .
+    image: sls_template
+    container_name: "sls_template"
     volumes:
       - .:/home/node/app
     restart: on-failure

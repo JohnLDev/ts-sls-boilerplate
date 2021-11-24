@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["es6"],
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "jest", "node"],
     "module": "commonjs",
     "moduleResolution": "node",
     "experimentalDecorators": true,
